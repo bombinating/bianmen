@@ -1,15 +1,13 @@
-package dev.bombianating.bianmen
+package dev.bombianating.bianmen.factory
 
+import dev.bombianating.bianmen.AbstractWicketTest
 import dev.bombianating.bianmen.WicketTesterExt.assertEnabledValue
 import dev.bombianating.bianmen.WicketTesterExt.assertVisibleValue
-import dev.bombinating.bianmen.ComponentExt.config
-import dev.bombinating.bianmen.ComponentExt.configFormComponent
 import dev.bombinating.bianmen.ModelExt.model
 import dev.bombinating.bianmen.ModelExt.obj
 import dev.bombinating.bianmen.context.ComponentReferenceType
+import dev.bombinating.bianmen.factory.TextFieldFactory.textField
 import org.apache.wicket.behavior.AttributeAppender
-import org.apache.wicket.markup.html.basic.Label
-import org.apache.wicket.markup.html.form.TextField
 import org.apache.wicket.model.Model
 import org.apache.wicket.validation.validator.StringValidator
 import org.junit.jupiter.api.DynamicTest.dynamicTest
@@ -17,7 +15,7 @@ import org.junit.jupiter.api.TestFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ComponentExtTest : AbstractWicketTest() {
+class TextFieldFactoryTest : AbstractWicketTest() {
 
     companion object {
         private fun textFieldMarkup(id: String = COMP_ID) = """<input type="text" wicket:id="$id"/>"""
@@ -25,8 +23,8 @@ class ComponentExtTest : AbstractWicketTest() {
 
     @TestFactory
     fun `renderBodyOnly Test`() = listOf(true, false, null).map {
-        dynamicTest("value=$it") {
-            Label(COMP_ID, "test").config(renderBodyOnly = it).test {
+        dynamicTest("renderBodyOnly=$it") {
+            textField(id = COMP_ID, model = "Test".model(), renderBodyOnly = it).test(markup = textFieldMarkup()) {
                 assertEquals(it ?: false, renderBodyOnly)
             }
         }
@@ -34,17 +32,17 @@ class ComponentExtTest : AbstractWicketTest() {
 
     @TestFactory
     fun `escapeModelStrings Test`() = listOf(true, false, null).map {
-        dynamicTest("value=$it") {
-            Label(COMP_ID, "test").config(escapeModelStrings = it).test {
-                assertEquals(it ?: true, escapeModelStrings)
+        dynamicTest("escapeModelStrings=$it") {
+            textField(id = COMP_ID, model = "Test".model(), escapeModelStrings = it).test(markup = textFieldMarkup()) {
+                assertEquals(it ?: false, escapeModelStrings)
             }
         }
     }
 
     @TestFactory
     fun `visibleWhen Test`() = listOf(Model.of(true), Model.of(false), null).map {
-        dynamicTest("model=${it?.`object` ?: "<no model>"}") {
-            Label(COMP_ID, "test").config(visibleWhen = it).test {
+        dynamicTest("visibleWhen=${it?.obj}") {
+            textField(id = COMP_ID, model = "Test".model(), visibleWhen = it).test(markup = textFieldMarkup()) {
                 tester.assertVisibleValue(COMP_ID, it?.obj)
             }
         }
@@ -52,8 +50,8 @@ class ComponentExtTest : AbstractWicketTest() {
 
     @TestFactory
     fun `enabledWhen Test`() = listOf(Model.of(true), Model.of(false), null).map {
-        dynamicTest("model=${it?.`object` ?: "<no model>"}") {
-            Label(COMP_ID, "test").config(enabledWhen = it).test {
+        dynamicTest("enabledWhen=${it?.obj}") {
+            textField(id = COMP_ID, model = "Test".model(), enabledWhen = it).test(markup = textFieldMarkup()) {
                 tester.assertEnabledValue(COMP_ID, it?.obj)
             }
         }
@@ -62,15 +60,16 @@ class ComponentExtTest : AbstractWicketTest() {
     @TestFactory
     fun `refType Test`() = ComponentReferenceType.values().map {
         dynamicTest("refType=$it") {
-            Label(COMP_ID, "test").config(refType = it).test {
+            textField(id = COMP_ID, model = "test".model(), refType = it).test(markup = textFieldMarkup()) {
                 check(it)
             }
         }
     }
 
     @Test
-    fun `behaviors Test`() {
-        Label(COMP_ID, "test").config(behaviors = listOf(AttributeAppender("class", "foo"))).test {
+    fun `add Behavior Test`() {
+        val behavior = AttributeAppender("class", "foo")
+        textField(id = COMP_ID, model = "test".model()) { add(behavior) }.test(markup = textFieldMarkup()) {
             tester.assertBehavior(COMP_ID, AttributeAppender::class.java)
         }
     }
@@ -78,7 +77,7 @@ class ComponentExtTest : AbstractWicketTest() {
     @TestFactory
     fun `required Test`() = listOf(true, false, null).map {
         dynamicTest("required=$it") {
-            TextField(COMP_ID, "test".model()).configFormComponent(required = it).test(textFieldMarkup()) {
+            textField(id = COMP_ID, model = "test".model(), required = it).test(textFieldMarkup()) {
                 assertEquals(it ?: false, isRequired)
             }
         }
@@ -87,7 +86,7 @@ class ComponentExtTest : AbstractWicketTest() {
     @TestFactory
     fun `label Test`() = listOf("Test".model(), null).map {
         dynamicTest("required=$it") {
-            TextField(COMP_ID, "test".model()).configFormComponent(label = it).test(textFieldMarkup()) {
+            textField(id = COMP_ID, model = "test".model(), label = it).test(textFieldMarkup()) {
                 assertEquals(it, label)
             }
         }
@@ -96,10 +95,11 @@ class ComponentExtTest : AbstractWicketTest() {
     @Test
     fun `validator Test`() {
         val validator = StringValidator.exactLength(15)
-        TextField<String?>(COMP_ID, "test".model<String?>()).configFormComponent(validators = listOf(validator))
+        textField(id = COMP_ID, model = "test".model()) { validate(StringValidator.exactLength(15)) }
             .test(textFieldMarkup()) {
                 tester.assertBehavior(COMP_ID, StringValidator::class.java)
             }
     }
 
 }
+

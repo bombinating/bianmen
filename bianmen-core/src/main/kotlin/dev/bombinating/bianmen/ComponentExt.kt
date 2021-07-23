@@ -3,7 +3,9 @@ package dev.bombinating.bianmen
 import dev.bombinating.bianmen.context.ComponentReferenceType
 import org.apache.wicket.Component
 import org.apache.wicket.behavior.Behavior
+import org.apache.wicket.markup.html.form.FormComponent
 import org.apache.wicket.model.IModel
+import org.apache.wicket.validation.IValidator
 import org.wicketstuff.minis.behavior.EnabledModelBehavior
 import org.wicketstuff.minis.behavior.VisibleModelBehavior
 
@@ -26,14 +28,14 @@ public object ComponentExt {
      * @param behaviors list of [Behavior]s to add to the [Component]
      */
     @Suppress("LongParameterList")
-    public fun <T: Component> T.config(
+    public fun <T : Component> T.config(
         refType: ComponentReferenceType? = null,
         visibleWhen: IModel<Boolean>? = null,
         enabledWhen: IModel<Boolean>? = null,
         renderBodyOnly: Boolean? = null,
         escapeModelStrings: Boolean? = null,
         behaviors: List<Behavior>? = null
-    ):T {
+    ): T {
         refType?.config(this)
         visibleWhen?.let { add(VisibleModelBehavior(it)) }
         enabledWhen?.let { add(EnabledModelBehavior(it)) }
@@ -41,6 +43,35 @@ public object ComponentExt {
         escapeModelStrings?.let { this.escapeModelStrings = it }
         @Suppress("SpreadOperator")
         behaviors?.let { add(*it.toTypedArray()) }
+        return this
+    }
+
+    /**
+     * Configures a [FormComponent] based on the parameters
+     *
+     * @receiver [FormComponent] to configure
+     * @return configured [FormComponent]
+     * @param T type of the [FormComponent]
+     * @param refType how the [FormComponent] may be updated from the server
+     * @param visibleWhen model of when the [FormComponent] is visible
+     * @param enabledWhen model of when the [FormComponent] is enabled
+     * @param renderBodyOnly whether to only render the body of the [FormComponent]
+     * @param escapeModelStrings whether to escape the [FormComponent]'s model string
+     * @param behaviors list of [Behavior]s to add to the [FormComponent]
+     * @param required whether the input is required
+     * @param label model of the label for the [FormComponent]
+     * @param validators list of [IValidator]s to add to the [FormComponent]
+     */
+    @Suppress("LongParameterList")
+    public fun <T : FormComponent<M>, M> T.configFormComponent(
+        required: Boolean? = null,
+        label: IModel<String>? = null,
+        validators: List<IValidator<in M>>? = null
+    ): T {
+        required?.let { this.setRequired(it) }
+        label?.let { this.label = it }
+        @Suppress("SpreadOperator")
+        validators?.let { add(*it.toTypedArray()) }
         return this
     }
 
