@@ -24,14 +24,14 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: libs-java-${{ matrix.java }}
-        path: build/libs
+        path: bianmen-core/build/libs
     - name: Upload Test Results
       uses: actions/upload-artifact@v1
       with:
         name: tests-java-${{ matrix.java }}
-        path: build/reports/tests/test
+        path: bianmen-core/build/reports/tests/test
     - name: Upload Static Analysis
       uses: actions/upload-artifact@v1
       with:
         name: analysis-java-${{ matrix.java }}
-        path: build/reports/detekt
+        path: bianmen-core/build/reports/detekt
