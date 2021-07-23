@@ -94,11 +94,28 @@ class TextFieldFactoryTest : AbstractWicketTest() {
 
     @Test
     fun `validator Test`() {
-        val validator = StringValidator.exactLength(15)
         textField(id = COMP_ID, model = "test".model()) { validate(StringValidator.exactLength(15)) }
             .test(textFieldMarkup()) {
                 tester.assertBehavior(COMP_ID, StringValidator::class.java)
             }
+    }
+
+    @TestFactory
+    fun `type Test`() = listOf(Number::class.java, null).map {
+        dynamicTest("type=$it") {
+            textField(id = COMP_ID, model = 123.model(), type = it).test(markup = textFieldMarkup()) {
+                assertEquals(it ?: Integer::class.java, type)
+            }
+        }
+    }
+
+    @TestFactory
+    fun `null model Test`() = listOf(Number::class.java, Int::class.java, null).map {
+        dynamicTest("type=$it") {
+            textField(id = COMP_ID, type = it).test(markup = textFieldMarkup()) {
+                assertEquals(it, type)
+            }
+        }
     }
 
 }
