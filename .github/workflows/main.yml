@@ -1,0 +1,37 @@
+name: Master Branch Build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  master-build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '11', '16' ]
+    name: Build Master Branch Java ${{ matrix.java }}
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up JDK ${{ matrix.java }}
+      uses: actions/setup-java@v1
+      with:
+        java-version: ${{ matrix.java }}
+    - name: Build with Gradle
+      run: sh ./gradlew build
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: libs-java-${{ matrix.java }}
+        path: build/libs
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v1
+      with:
+        name: tests-java-${{ matrix.java }}
+        path: build/reports/tests/test
+    - name: Upload Static Analysis
+      uses: actions/upload-artifact@v1
+      with:
+        name: analysis-java-${{ matrix.java }}
+        path: build/reports/detekt
