@@ -14,6 +14,9 @@ import org.wicketstuff.minis.behavior.VisibleModelBehavior
  */
 public object ComponentExt {
 
+    internal const val wicketNamespacePrefix: String = "wicket"
+    internal const val wicketIdAttr: String = "$wicketNamespacePrefix:id"
+
     /**
      * Configures a [Component] based on the parameters
      *
