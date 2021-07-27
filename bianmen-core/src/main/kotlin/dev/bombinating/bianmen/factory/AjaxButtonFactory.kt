@@ -1,6 +1,7 @@
 package dev.bombinating.bianmen.factory
 
 import dev.bombinating.bianmen.ComponentExt.config
+import dev.bombinating.bianmen.ComponentExt.idGenerator
 import dev.bombinating.bianmen.context.AjaxButtonContext
 import dev.bombinating.bianmen.context.AjaxButtonContextImpl
 import dev.bombinating.bianmen.context.ComponentReferenceType
@@ -28,7 +29,7 @@ public object AjaxButtonFactory {
      */
     @Suppress("LongParameterList")
     public fun ajaxButton(
-        id: String,
+        id: String = idGenerator(),
         model: IModel<String>? = null,
         form: Form<*>? = null,
         defaultFormProcessing: Boolean? = null,

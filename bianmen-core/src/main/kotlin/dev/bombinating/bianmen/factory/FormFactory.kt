@@ -1,6 +1,7 @@
 package dev.bombinating.bianmen.factory
 
 import dev.bombinating.bianmen.ComponentExt.config
+import dev.bombinating.bianmen.ComponentExt.idGenerator
 import dev.bombinating.bianmen.context.ComponentReferenceType
 import dev.bombinating.bianmen.context.FormContext
 import dev.bombinating.bianmen.context.FormContextImpl
@@ -28,7 +29,7 @@ public object FormFactory {
      */
     @Suppress("LongParameterList")
     public fun <T> form(
-        id: String,
+        id: String = idGenerator(),
         model: IModel<T>? = null,
         refType: ComponentReferenceType? = null,
         visibleWhen: IModel<Boolean>? = null,

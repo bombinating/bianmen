@@ -2,30 +2,33 @@ package dev.bombinating.bianmen.dsl.tag
 
 import dev.bombinating.bianmen.ComponentExt.wicketIdAttr
 import dev.bombinating.bianmen.dsl.WicketTag
-import kotlinx.html.DIV
 import kotlinx.html.FlowContent
+import kotlinx.html.SPAN
 import kotlinx.html.TagConsumer
 import kotlinx.html.attributesMapOf
 import kotlinx.html.visit
 import org.apache.wicket.Component
 
-public class WicketDiv(
+public class WicketSpan(
     override val component: Component,
     initialAttributes: Map<String, String>,
     consumer: TagConsumer<*>
-) : DIV(initialAttributes = initialAttributes, consumer = consumer),
+) : SPAN(initialAttributes = initialAttributes, consumer = consumer),
     WicketTag {
 
     public companion object {
-        public fun FlowContent.div(
+
+        public fun FlowContent.span(
             component: Component,
             classes: String? = null,
-            block: WicketDiv.() -> Unit = {}
+            block: WicketSpan.() -> Unit = {}
         ): Unit =
-            WicketDiv(
+            WicketSpan(
                 component = component,
                 initialAttributes = attributesMapOf("class", classes, wicketIdAttr, component.id),
                 consumer = consumer
             ).visit(block)
+
     }
+
 }

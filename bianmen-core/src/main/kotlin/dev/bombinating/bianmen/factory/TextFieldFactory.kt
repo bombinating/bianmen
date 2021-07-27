@@ -2,6 +2,7 @@ package dev.bombinating.bianmen.factory
 
 import dev.bombinating.bianmen.ComponentExt.config
 import dev.bombinating.bianmen.ComponentExt.configFormComponent
+import dev.bombinating.bianmen.ComponentExt.idGenerator
 import dev.bombinating.bianmen.context.ComponentReferenceType
 import dev.bombinating.bianmen.context.FormComponentContext
 import dev.bombinating.bianmen.context.FormComponentContextImpl
@@ -27,7 +28,7 @@ public object TextFieldFactory {
      */
     @Suppress("LongParameterList")
     public fun <T> textField(
-        id: String,
+        id: String = idGenerator(),
         model: IModel<T>? = null,
         type: Class<T>? = null,
         refType: ComponentReferenceType? = null,

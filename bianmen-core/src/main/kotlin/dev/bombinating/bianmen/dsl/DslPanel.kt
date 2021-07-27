@@ -35,6 +35,7 @@ public abstract class DslPanel(id: String, model: IModel<*>? = null) : Panel(id,
         val regionInfo = dsl.finalize()
         markup = regionInfo.markup
         super.onInitialize()
+        @Suppress("SpreadOperator")
         add(*regionInfo.roots.toTypedArray())
     }
 

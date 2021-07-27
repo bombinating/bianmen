@@ -28,7 +28,7 @@ internal class WicketTagConsumer(
                 if (it is MarkupContainer) {
                     it.add(nextComponent)
                 } else {
-                    throw RuntimeException("Not a MarkupContainer")
+                    throw WicketDslException("Attempted to add a Component to a parent that is not a MarkupContainer")
                 }
             } ?: roots.add(nextComponent)
             current = nextComponent

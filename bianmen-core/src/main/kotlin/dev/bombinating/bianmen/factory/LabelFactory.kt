@@ -1,6 +1,7 @@
 package dev.bombinating.bianmen.factory
 
 import dev.bombinating.bianmen.ComponentExt.config
+import dev.bombinating.bianmen.ComponentExt.idGenerator
 import dev.bombinating.bianmen.ModelExt.model
 import dev.bombinating.bianmen.context.ComponentContext
 import dev.bombinating.bianmen.context.ComponentContextImpl
@@ -27,7 +28,7 @@ public object LabelFactory {
      */
     @Suppress("LongParameterList")
     public fun label(
-        id: String,
+        id: String = idGenerator(),
         model: IModel<*>?,
         refType: ComponentReferenceType? = null,
         visibleWhen: IModel<Boolean>? = null,
@@ -62,7 +63,7 @@ public object LabelFactory {
      */
     @Suppress("LongParameterList")
     public fun label(
-        id: String,
+        id: String = idGenerator(),
         label: Serializable,
         refType: ComponentReferenceType? = null,
         visibleWhen: IModel<Boolean>? = null,

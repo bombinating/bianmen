@@ -1,13 +1,12 @@
 package dev.bombinating.bianmen.factory
 
 import dev.bombinating.bianmen.ComponentExt.config
-import dev.bombinating.bianmen.ModelExt.model
+import dev.bombinating.bianmen.ComponentExt.idGenerator
 import dev.bombinating.bianmen.context.ComponentContext
 import dev.bombinating.bianmen.context.ComponentContextImpl
 import dev.bombinating.bianmen.context.ComponentReferenceType
 import org.apache.wicket.markup.html.WebMarkupContainer
 import org.apache.wicket.model.IModel
-import java.io.Serializable
 
 /**
  * Factory methods for creating [WebMarkupContainer]s.
@@ -27,7 +26,7 @@ public object WebMarkupContainerFactory {
      */
     @Suppress("LongParameterList")
     public fun webMarkupContainer(
-        id: String,
+        id: String = idGenerator(),
         model: IModel<*>? = null,
         refType: ComponentReferenceType? = null,
         visibleWhen: IModel<Boolean>? = null,

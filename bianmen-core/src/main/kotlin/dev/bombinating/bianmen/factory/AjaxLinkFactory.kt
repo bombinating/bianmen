@@ -1,5 +1,6 @@
 package dev.bombinating.bianmen.factory
 
+import dev.bombinating.bianmen.ComponentExt.idGenerator
 import dev.bombinating.bianmen.ComponentExt.config
 import dev.bombinating.bianmen.context.AjaxLinkContext
 import dev.bombinating.bianmen.context.AjaxLinkContextImpl
@@ -27,7 +28,7 @@ public object AjaxLinkFactory {
      */
     @Suppress("LongParameterList")
     public fun <T> ajaxLink(
-        id: String,
+        id: String = idGenerator(),
         model: IModel<T>?,
         refType: ComponentReferenceType? = null,
         visibleWhen: IModel<Boolean>? = null,
@@ -67,7 +68,7 @@ public object AjaxLinkFactory {
      */
     @Suppress("LongParameterList")
     public fun ajaxLink(
-        id: String,
+        id: String = idGenerator(),
         refType: ComponentReferenceType? = null,
         visibleWhen: IModel<Boolean>? = null,
         enabledWhen: IModel<Boolean>? = null,

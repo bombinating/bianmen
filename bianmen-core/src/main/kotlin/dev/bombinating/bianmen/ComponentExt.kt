@@ -8,12 +8,15 @@ import org.apache.wicket.model.IModel
 import org.apache.wicket.validation.IValidator
 import org.wicketstuff.minis.behavior.EnabledModelBehavior
 import org.wicketstuff.minis.behavior.VisibleModelBehavior
+import java.util.Base64
+import kotlin.random.Random
 
 /**
  * [Component]-related functionality
  */
 public object ComponentExt {
 
+    private const val ID_SIZE_BYTES: Int = 8
     internal const val wicketNamespacePrefix: String = "wicket"
     internal const val wicketIdAttr: String = "$wicketNamespacePrefix:id"
 
@@ -77,5 +80,7 @@ public object ComponentExt {
         validators?.let { add(*it.toTypedArray()) }
         return this
     }
+
+    internal fun idGenerator(): String = Base64.getEncoder().encodeToString(Random.nextBytes(ID_SIZE_BYTES))
 
 }
