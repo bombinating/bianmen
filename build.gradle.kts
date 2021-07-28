@@ -45,7 +45,7 @@ subprojects {
         /*
          * Kotlin
          */
-        implementation(kotlin("stdlib"))
+        implementation(kotlin("stdlib-jdk8"))
         /*
          * Wicket
          */
@@ -56,7 +56,10 @@ subprojects {
         /*
          * Kotlin HTML DSL
          */
-        implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-html-jvm", version = kotlinxHtmlVersion)
+        implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-html-jvm", version = kotlinxHtmlVersion) {
+            exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
+            exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-common")
+        }
         /*
          * Testing
          */

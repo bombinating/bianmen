@@ -26,6 +26,7 @@ class DslPanelTest : AbstractWicketTest() {
             tester.assertComponent("$COMP_ID:test", WebMarkupContainer::class.java)
         }
     }
+
     @Test
     fun `nested element test`() {
         object : DslPanel(id = COMP_ID) {
