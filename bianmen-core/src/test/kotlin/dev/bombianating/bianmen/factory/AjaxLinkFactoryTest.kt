@@ -3,20 +3,33 @@ package dev.bombianating.bianmen.factory
 import dev.bombianating.bianmen.AbstractWicketTest
 import dev.bombianating.bianmen.WicketTesterExt.assertEnabledValue
 import dev.bombianating.bianmen.WicketTesterExt.assertVisibleValue
-import dev.bombinating.bianmen.ComponentExt.config
 import dev.bombinating.bianmen.ModelExt.model
 import dev.bombinating.bianmen.ModelExt.obj
 import dev.bombinating.bianmen.context.ComponentReferenceType
+import dev.bombinating.bianmen.factory.AjaxButtonFactory
 import dev.bombinating.bianmen.factory.AjaxLinkFactory.ajaxLink
 import org.apache.wicket.behavior.AttributeAppender
-import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.model.Model
 import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
-import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class AjaxLinkFactoryTest : AbstractWicketTest() {
+
+    @TestFactory
+    fun `id Test`() = listOf(COMP_ID, null)
+        .flatMap { id -> listOf(null, "Test".model()).map { model -> id to model } }
+        .map {
+        dynamicTest("use model=${it.second != null}, id=${if (it.first == null) "<not set>" else "<set>"}") {
+            val c = if (it.first == null) {
+                AjaxButtonFactory.ajaxButton()
+            } else {
+                AjaxButtonFactory.ajaxButton(id = COMP_ID)
+            }
+            assertNotNull(c.id)
+        }
+    }
 
     @TestFactory
     fun `renderBodyOnly Test`() = listOf(true, false, null)

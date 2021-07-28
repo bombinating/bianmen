@@ -13,8 +13,25 @@ import org.apache.wicket.model.Model
 import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class LabelFactoryTest : AbstractWicketTest() {
+
+    @TestFactory
+    fun `id Test`() = listOf("test", null)
+        .flatMap { renderBodyOnly -> listOf("Test", "Test".model()).map { model -> renderBodyOnly to model } }
+        .map {
+            dynamicTest("use model=${it.second is IModel<*>}, id=${if (it.first != null) "<set>" else "<not set>"}") {
+                if (it.second is String) {
+                    it.first?.let { id -> label(id = id, label = it.second) } ?: label(label = it.second)
+                } else {
+                    it.first?.let { id -> label(id = id, model = it.second as IModel<*>) } ?:
+                    label(model = it.second as IModel<*>)
+                }.test {
+                    assertNotNull(id)
+                }
+            }
+        }
 
     @TestFactory
     fun `renderBodyOnly Test`() = listOf(true, false, null)

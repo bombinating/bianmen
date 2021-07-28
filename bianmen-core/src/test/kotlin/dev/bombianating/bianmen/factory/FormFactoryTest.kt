@@ -24,11 +24,20 @@ import java.time.LocalDateTime
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class FormFactoryTest : AbstractWicketTest() {
 
     companion object {
         private fun formMarkup(id: String = COMP_ID) = """<form wicket:id="$id"></form>"""
+    }
+
+    @TestFactory
+    fun `id Test`() = listOf(COMP_ID, null).map {
+        dynamicTest("id=${if (it == null) "<not set>" else "<set>"}") {
+            val form = if (it == null) form(model = "test".model()) else form(id = it, model = "test".model())
+            assertNotNull(form.id)
+        }
     }
 
     @TestFactory

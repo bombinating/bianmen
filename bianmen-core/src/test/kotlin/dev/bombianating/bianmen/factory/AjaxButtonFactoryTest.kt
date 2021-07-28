@@ -15,6 +15,7 @@ import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class AjaxButtonFactoryTest : AbstractWicketTest() {
 
@@ -22,6 +23,18 @@ class AjaxButtonFactoryTest : AbstractWicketTest() {
         private const val FORM_ID = "formId"
         private fun markup(formId: String = FORM_ID, buttonId: String = COMP_ID) =
             """<form wicket:id="$formId"><button wicket:id="$buttonId"></button></form>"""
+    }
+
+    @TestFactory
+    fun `id Test`() = listOf(COMP_ID, null).map {
+        dynamicTest("id=${if (it == null) "<not set>" else "<set>"}") {
+            val c = if (it == null) {
+                ajaxButton()
+            } else {
+                ajaxButton(id = COMP_ID)
+            }
+            assertNotNull(c.id)
+        }
     }
 
     @TestFactory

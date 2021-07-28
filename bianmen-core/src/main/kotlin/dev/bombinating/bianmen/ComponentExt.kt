@@ -1,5 +1,6 @@
 package dev.bombinating.bianmen
 
+import dev.bombinating.bianmen.ComponentExt.idGenerator
 import dev.bombinating.bianmen.context.ComponentReferenceType
 import org.apache.wicket.Component
 import org.apache.wicket.behavior.Behavior
@@ -16,7 +17,7 @@ import kotlin.random.Random
  */
 public object ComponentExt {
 
-    private const val ID_SIZE_BYTES: Int = 8
+    private const val ID_SIZE_BYTES: Int = 9
     internal const val wicketNamespacePrefix: String = "wicket"
     internal const val wicketIdAttr: String = "$wicketNamespacePrefix:id"
 
@@ -81,6 +82,6 @@ public object ComponentExt {
         return this
     }
 
-    internal fun idGenerator(): String = Base64.getEncoder().encodeToString(Random.nextBytes(ID_SIZE_BYTES))
+    internal fun idGenerator(): String = Base64.getUrlEncoder().encodeToString(Random.nextBytes(ID_SIZE_BYTES))
 
 }
