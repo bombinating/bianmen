@@ -21,6 +21,14 @@ class TextFieldFactoryTest : AbstractWicketTest() {
         private fun textFieldMarkup(id: String = COMP_ID) = """<input type="text" wicket:id="$id"/>"""
     }
 
+    @Test
+    fun `nullable model object Test`() {
+        textField(id = COMP_ID, model = null.model<String?>()) { validate(StringValidator.exactLength(15)) }
+            .test(textFieldMarkup()) {
+                tester.assertBehavior(COMP_ID, StringValidator::class.java)
+            }
+    }
+
     @TestFactory
     fun `renderBodyOnly Test`() = listOf(true, false, null).map {
         dynamicTest("renderBodyOnly=$it") {

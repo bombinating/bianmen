@@ -10,16 +10,23 @@ import dev.bombinating.bianmen.factory.CheckboxFactory.checkbox
 import org.apache.wicket.behavior.AttributeAppender
 import org.apache.wicket.model.Model
 import org.apache.wicket.validation.validator.RangeValidator
-import org.apache.wicket.validation.validator.StringValidator
 import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class CheckBoxFactoryTest : AbstractWicketTest() {
 
     companion object {
         private fun checkboxMarkup(id: String = COMP_ID) = """<input type="checkbox" wicket:id="$id"/>"""
+    }
+
+    @Test
+    fun `nullable model object Test`() {
+        checkbox(id = COMP_ID, model = null.model()).test(markup = checkboxMarkup()) {
+            assertNull(modelObject)
+        }
     }
 
     @TestFactory

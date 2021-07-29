@@ -28,7 +28,7 @@ public object CheckboxFactory {
     @Suppress("LongParameterList")
     public fun checkbox(
         id: String = idGenerator(),
-        model: IModel<Boolean>? = null,
+        model: IModel<Boolean?>? = null,
         refType: ComponentReferenceType? = null,
         visibleWhen: IModel<Boolean>? = null,
         enabledWhen: IModel<Boolean>? = null,

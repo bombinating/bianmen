@@ -30,7 +30,7 @@ public object TextFieldFactory {
     public fun <T> textField(
         id: String = idGenerator(),
         model: IModel<T>? = null,
-        type: Class<T>? = null,
+        type: Class<out T>? = null,
         refType: ComponentReferenceType? = null,
         visibleWhen: IModel<Boolean>? = null,
         enabledWhen: IModel<Boolean>? = null,
@@ -42,7 +42,8 @@ public object TextFieldFactory {
     ): TextField<T> {
         val context = FormComponentContextImpl<TextField<T>, T>()
         config?.let { it(context) }
-        return (if (type == null) TextField(id, model) else TextField(id, model, type))
+        @Suppress("UNCHECKED_CAST")
+        return (if (type == null) TextField(id, model) else TextField(id, model, type as Class<T>))
             .config(
                 refType = refType,
                 visibleWhen = visibleWhen,
