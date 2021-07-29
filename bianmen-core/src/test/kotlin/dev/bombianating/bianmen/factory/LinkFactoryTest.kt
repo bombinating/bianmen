@@ -17,14 +17,12 @@ import kotlin.test.assertNotNull
 class LinkFactoryTest : AbstractWicketTest() {
 
     @TestFactory
-    fun `id Test`() = listOf(COMP_ID, null)
-        .flatMap { id -> listOf(null, "Test".model()).map { model -> id to model } }
-        .map {
-        dynamicTest("use model=${it.second != null}, id=${if (it.first == null) "<not set>" else "<set>"}") {
-            val c = if (it.first == null) {
+    fun `id Test`() = listOf(COMP_ID, null).map {
+        dynamicTest("id=${if (it == null) "<not set>" else "<set>"}") {
+            val c = if (it == null) {
                 link()
             } else {
-                link(id = COMP_ID)
+                link(id = it)
             }
             assertNotNull(c.id)
         }
