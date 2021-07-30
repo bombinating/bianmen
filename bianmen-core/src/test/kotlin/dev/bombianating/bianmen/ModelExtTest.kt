@@ -3,6 +3,7 @@ package dev.bombianating.bianmen
 import dev.bombianating.bianmen.WicketTesterExt.assertVisibleValue
 import dev.bombinating.bianmen.ComponentExt.config
 import dev.bombinating.bianmen.ModelExt.ldm
+import dev.bombinating.bianmen.ModelExt.listModel
 import dev.bombinating.bianmen.ModelExt.model
 import dev.bombinating.bianmen.ModelExt.obj
 import org.apache.wicket.markup.html.basic.Label
@@ -43,6 +44,13 @@ class ModelExtTest {
             val model = it.model()
             assertEquals(it, model.obj)
         }
+    }
+
+    @Test
+    fun `list model`() {
+        val list = listOf("A", "B", "C")
+        val model = list.listModel()
+        assertEquals(list, model.obj)
     }
 
 }

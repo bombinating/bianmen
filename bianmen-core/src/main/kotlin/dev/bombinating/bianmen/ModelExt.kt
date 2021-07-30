@@ -3,6 +3,7 @@ package dev.bombinating.bianmen
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.LoadableDetachableModel
 import org.apache.wicket.model.Model
+import org.apache.wicket.model.util.ListModel
 import java.io.Serializable
 
 /**
@@ -40,5 +41,14 @@ public object ModelExt {
      * @return model where the object is the receiver
      */
     public fun <T: Serializable?> T.model(): IModel<T> = Model.of(this)
+
+    /**
+     * Returns an [IModel] for the receiver list.
+     *
+     * @param T type of the items in the list
+     * @receiver list to create the model from
+     * @return model of the receiver list
+     */
+    public fun <T> List<T>.listModel(): IModel<List<T>> = ListModel(this)
 
 }
