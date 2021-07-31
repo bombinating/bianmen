@@ -12,15 +12,15 @@ internal class ListViewContextImpl<T> : ComponentContextImpl(), ListViewContext<
     /**
      * Mutable lambda to invoke in a [ListView.populateItem] method
      */
-    private var _populateItem: (ListView<T>.(item: ListItem<T>) -> Unit)? = null
+    private var _populateItem: (ListItem<T>.() -> Unit)? = null
 
     /**
      * Read-only lambda to invoke in a [ListView.populateItem] method
      */
-    internal val populateItem: (ListView<T>.(item: ListItem<T>) -> Unit)?
+    internal val populateItem: (ListItem<T>.() -> Unit)?
         get() = _populateItem
 
-    override fun populateItem(handler: ListView<T>.(item: ListItem<T>) -> Unit) {
+    override fun populateItem(handler: (ListItem<T>.() -> Unit)) {
         _populateItem = handler
     }
 }

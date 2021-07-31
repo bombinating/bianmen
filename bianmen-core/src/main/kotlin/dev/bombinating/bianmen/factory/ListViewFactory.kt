@@ -42,7 +42,7 @@ public object ListViewFactory {
         val handler = context.populateItem
         return object : ListView<T>(id, model) {
             override fun populateItem(item: ListItem<T>) {
-                handler?.invoke(this, item)
+                handler?.invoke(item)
             }
         }.config(
             refType = refType,

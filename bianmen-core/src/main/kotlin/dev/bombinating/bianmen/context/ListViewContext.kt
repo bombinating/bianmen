@@ -12,5 +12,5 @@ public interface ListViewContext<T> : ComponentContext {
      *
      * @param handler lambda to invoked in [ListView.populateItem]
      */
-    public fun populateItem(handler: ListView<T>.(item: ListItem<T>) -> Unit)
+    public fun populateItem(handler: ListItem<T>.() -> Unit)
 }

@@ -103,8 +103,8 @@ class ListViewFactoryTest : AbstractWicketTest() {
     @Test
     fun `populateItem Test`() {
         listView(id = COMP_ID, model = DEFAULT_MODEL) {
-            populateItem { item ->
-                item.add(label(id = "test", model = item.model))
+            populateItem {
+                add(label(id = "test", model = model))
             }
         }
             .test(markup()) {
