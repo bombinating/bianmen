@@ -10,8 +10,6 @@ import dev.bombinating.bianmen.factory.WebMarkupContainerFactory.webMarkupContai
 import kotlinx.html.span
 import org.apache.wicket.markup.html.WebMarkupContainer
 import org.apache.wicket.markup.html.basic.Label
-import java.util.Base64
-import kotlin.random.Random
 import kotlin.test.Test
 
 class DslPanelTest : AbstractWicketTest() {
