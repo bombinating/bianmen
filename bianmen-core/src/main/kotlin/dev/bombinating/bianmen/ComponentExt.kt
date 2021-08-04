@@ -6,6 +6,7 @@ import org.apache.wicket.Component
 import org.apache.wicket.behavior.Behavior
 import org.apache.wicket.markup.html.form.FormComponent
 import org.apache.wicket.model.IModel
+import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.validation.IValidator
 import org.wicketstuff.minis.behavior.EnabledModelBehavior
 import org.wicketstuff.minis.behavior.VisibleModelBehavior
@@ -83,5 +84,15 @@ public object ComponentExt {
     }
 
     internal fun idGenerator(): String = Base64.getUrlEncoder().encodeToString(Random.nextBytes(ID_SIZE_BYTES))
+
+    /**
+     * Converts the [params] to entries in the [PageParameters] object.
+     *
+     * @param params [Pair]s of entries to add to the [PageParameters] object
+     * @return [PageParameters] with the [params] added as entries
+     */
+    public fun params(vararg params: Pair<String, Any>): PageParameters = PageParameters().apply {
+        params.forEach { add(it.first, it.second) }
+    }
 
 }

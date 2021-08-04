@@ -4,6 +4,7 @@ import dev.bombianating.bianmen.WicketTesterExt.assertEnabledValue
 import dev.bombianating.bianmen.WicketTesterExt.assertVisibleValue
 import dev.bombinating.bianmen.ComponentExt.config
 import dev.bombinating.bianmen.ComponentExt.configFormComponent
+import dev.bombinating.bianmen.ComponentExt.params
 import dev.bombinating.bianmen.ModelExt.model
 import dev.bombinating.bianmen.ModelExt.obj
 import dev.bombinating.bianmen.context.ComponentReferenceType
@@ -11,6 +12,7 @@ import org.apache.wicket.behavior.AttributeAppender
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.form.TextField
 import org.apache.wicket.model.Model
+import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.validation.validator.StringValidator
 import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
@@ -100,6 +102,13 @@ class ComponentExtTest : AbstractWicketTest() {
             .test(textFieldMarkup()) {
                 tester.assertBehavior(COMP_ID, StringValidator::class.java)
             }
+    }
+
+    @TestFactory
+    fun `params test`() = listOf("test" to 1, "abc" to "def").map {
+        dynamicTest("values=$it") {
+            assertEquals(PageParameters().add(it.first, it.second), params(it))
+        }
     }
 
 }
