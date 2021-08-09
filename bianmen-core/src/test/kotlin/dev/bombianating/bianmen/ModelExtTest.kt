@@ -63,6 +63,7 @@ class ModelExtTest {
 
     @Test
     fun `model plus prop test`() {
+        @Suppress("SerialVersionUIDInSerializableClass")
         class Person(var firstName: String, var lastName: String): Serializable
         val personModel = +Person(firstName = "Santa", lastName = "Claus")
         val firstNameModel = personModel + Person::firstName

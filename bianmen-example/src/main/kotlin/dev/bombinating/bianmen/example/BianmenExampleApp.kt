@@ -11,7 +11,7 @@ import java.util.EnumSet.allOf
 import javax.servlet.DispatcherType
 
 @SpringBootApplication
-class RoqueExampleApp {
+class BianmenExampleApp {
 
     @Bean
     fun helloWorld() = wicketConfig(::HelloWorldApp, "helloworld")
@@ -28,5 +28,5 @@ class RoqueExampleApp {
 
 
 fun main() {
-    SpringApplication.run(RoqueExampleApp::class.java)
+    SpringApplication.run(BianmenExampleApp::class.java)
 }
